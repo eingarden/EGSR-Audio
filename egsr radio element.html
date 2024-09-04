@@ -73,7 +73,7 @@
 .collapsible-container {
     display: flex;
     align-items: flex-start;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.2s ease-out;
     transform: translateX(5px);
     justify-content: flex-start;
     font-size: 5px;
@@ -83,7 +83,7 @@
 .collapsible {
     display: inline-flex;
     padding: 10px 10px;
-    transition: transform 2.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     transform: translateX(5px);
     font-size: 5px;
     border-radius: 0px;
@@ -126,10 +126,6 @@
 .collapsible.active {
     transform: translateX(0px);
     font-size: 5px;
-}
-
-#category3 {
-    background-color: red;
 }
 
 /*------------------------------------------------------------------------------*/
@@ -245,7 +241,7 @@
         </div>
         
         <div class="collapsible-container">
-            <button type="button" class="collapsible">Category 1</button>
+            <button type="button" class="collapsible" style="background-color: red">Category 1</button>
             <div class="content playlist" id="category1">
                 <ul></ul>
             </div>
