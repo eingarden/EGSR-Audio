@@ -7,38 +7,74 @@
 .audio-player {
     background-color: #00000000;
     color: #0088ff;
-    padding: 10px;
+    padding: 0px;
     font-family: Segoe UI, sans-serif;
     font-size: 5px;
     height: 90px;
     width: 1600px;
 }
+
+
 /*------------------------------------------------------------------------------*/
 .pause {
-    font-size: 5px;
-    background-color: #00000000;
-    border-radius: 0px;
-    border:0px;
-    border-color:#00000000;
+    background-image: url( 
+'https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 40px; 
+            height: 20px; 
+            background-color: #c6282800;
+            border-color:#00000000;
+            
 
 }
 
+
 .play {
-    font-size: 5px;
+    background-image: url( 
+'https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 40px; 
+            height: 20px; 
+            background-color: #00000000;
+            border-color:#00000000;
+            
+
 }
 
 .prev{
-    font-size: 5px;
+    background-image: url( 
+'https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 40px; 
+            height: 20px; 
+            background-color: #00000000;
+            border-color:#00000000;
+            
+
 }
 
 .next{
-    font-size: 5px;
+    background-image: url( 
+'https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 40px; 
+            height: 20px; 
+            background-color: #00000000;
+            border-color:#00000000;
+            
+
 }
 
 /* General container styles */
 .collapsible-container {
     display: flex;
     align-items: flex-start;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(5px);
     justify-content: flex-start;
     font-size: 5px;
 }
@@ -47,8 +83,8 @@
 .collapsible {
     display: inline-flex;
     padding: 10px 10px;
-    transform: translateX(0);
-    transition: transform 0.3s ease-out;
+    transition: transform 2.3s ease-in-out;
+    transform: translateX(5px);
     font-size: 5px;
     border-radius: 0px;
     border: 0px solid #00000000; /* Add a border for clarity */
@@ -64,22 +100,16 @@
     background-color: #007ACC;
 }
 
-.collapsible-content {
-    display: none; /* Initially hidden */
-    transition: height 0.3s ease-out;
-    width: 30px; /* Set the width to match the button */
-    height: 30px; /* Set the height to match the button */
-}
 
 .collapsible.active + .collapsible-content {
-    display: block;
+    display: flexbox;
 }
 /* Styles for the content area of each collapsible */
 .content {
     max-width: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-width 0.3s ease-out, max-height 0.3s ease-out;
+    transition: max-width 0.7s ease-out, max-height 0.2s ease-out;
     background-color: white;
     padding: 0 6px;
     font-size: 5px;
@@ -96,6 +126,10 @@
 .collapsible.active {
     transform: translateX(0px);
     font-size: 5px;
+}
+
+#category3 {
+    background-color: red;
 }
 
 /*------------------------------------------------------------------------------*/
@@ -202,10 +236,10 @@
     <div class="audio-player">
         <h2 class="song-title"></h2>
         <div class="top-bar">
-            <button class="prev"><<</button>
-            <button class="play">Play</button>
-            <button class="pause">Pause</button>
-            <button class="next">>></button>
+            <button class="prev"></button>
+            <button class="play"></button>
+            <button class="pause"> </button>
+            <button class="next"></button>
             <input type="range" class="progress" min="0" max="100" value="0">
             <span class="time">0:00 / 0:00</span>
         </div>
@@ -247,8 +281,13 @@
 
         function fetchAudioFiles(category, folderPath) {
             const apiUrl = `https://api.github.com/repos/eingarden/EGSR-Audio/contents/${folderPath}`;
+            const token = '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';
             
-            fetch(apiUrl)
+            fetch(apiUrl, {
+                headers: {
+                    'Authorization': `token ${token}`
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     data.forEach(file => {
