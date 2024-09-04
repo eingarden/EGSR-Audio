@@ -1,384 +1,465 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Segoe+UI+Light">
-<head>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Segoe+UI+Light"
+  />
+  <head>
     <style>
-/* Player info and background */
-.audio-player {
-    background-color: #00000000;
-    color: #0088ff;
-    padding: 0px;
-    font-family: Segoe UI, sans-serif;
-    font-size: 5px;
-    height: 90px;
-    width: 1600px;
+      /* Player info and background */
+      .audio-player {
+        background-color: #00000000;
+        color: #0088ff;
+        padding: 0px;
+        font-family: Segoe UI, sans-serif;
+        font-size: 5px;
+        height: 90px;
+        width: 1600px;
+      }
+
+      /*------------------------------------------------------------------------------*/
+      .pause {
+        background-image: url("https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 40px;
+        height: 20px;
+        background-color: #c6282800;
+        border-color: #00000000;
+        transform: scale(1);
+        transition: transform .5s;
 }
 
+      .pause.paused {
+        transform: scale(.8) TranslateY(-2px);
+        transition: transform .1s;
+        opacity: 0.5;
+      }
 
-/*------------------------------------------------------------------------------*/
-.pause {
-    background-image: url( 
-'https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            width: 40px; 
-            height: 20px; 
-            background-color: #c6282800;
-            border-color:#00000000;
-            
+      .pause.paused:hover {
+        transform: scale(.75) TranslateY(-2px);
+        transition: transform .1s;
+        opacity: 0.5;
+      }
 
-}
+      .pause:hover {
+        transform: rotate(0deg) TranslateY(-2px);
+        transition: transform .1s;
+      }
 
+      .play {
+        background-image: url("https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 40px;
+        height: 20px;
+        background-color: #00000000;
+        border-color: #00000000;
+        transform: scale(1);
+        transition: transform .5s;
+      }
 
-.play {
-    background-image: url( 
-'https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            width: 40px; 
-            height: 20px; 
-            background-color: #00000000;
-            border-color:#00000000;
-            
+      .play:hover {
+        transform: rotate(0deg) TranslateY(-2px);
+        transition: transform .1s;
+      }
 
-}
+      .prev {
+        background-image: url("https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 40px;
+        height: 20px;
+        background-color: #00000000;
+        border-color: #00000000;
+        transition: transform .5s;
+      }
 
-.prev{
-    background-image: url( 
-'https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            width: 40px; 
-            height: 20px; 
-            background-color: #00000000;
-            border-color:#00000000;
-            
+      .prev:hover {
+        transform: rotate(0deg) TranslateY(-2px);
+        transition: transform .1s;
+      }
 
-}
+      .next {
+        background-image: url("https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 40px;
+        height: 20px;
+        background-color: #00000000;
+        border-color: #00000000;
+        transition: transform .5s;
+      }
 
-.next{
-    background-image: url( 
-'https://github.com/simple-icons/simple-icons/raw/develop/icons/3m.svg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            width: 40px; 
-            height: 20px; 
-            background-color: #00000000;
-            border-color:#00000000;
-            
+      .next:hover {
+        transform: rotate(0deg) TranslateY(-2px);
+        transition: transform .1s;
+      }
 
-}
+      /* General container styles */
+      .collapsible-container {
+        display: flex;
+        align-items: flex-start;
+        transition: transform 0.1s linear;
+        transform: translateX(5px);
+        justify-content: flex-start;
+        font-size: 5px;
+        margin-top: 10px;
+        margin-right: 350px;
+        margin-left: -6px;
+      }
 
-/* General container styles */
-.collapsible-container {
-    display: flex;
-    align-items: flex-start;
-    transition: transform 0.2s ease-out;
-    transform: translateX(5px);
-    justify-content: flex-start;
-    font-size: 5px;
-}
+      /* Styles for each collapsible button */
+      .collapsible {
+        display: inline-flex;
+        padding: 10px 10px;
+        transition: transform 0.15s ease-out;
+        transform: translateY(-5px);
+        font-size: 5px;
+        border-radius: 0px;
+        border: 0px solid #00000000; /* Add a border for clarity */
+        background-color: #3399ff; /* Metro UI blue */
+        color: #ffffff;
+        width: 30px; /* Adjust width as needed */
+        height: 30px; /* Adjust height as needed */
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        cursor: pointer; /* Indicate clickability */
+      }
 
-/* Styles for each collapsible button */
-.collapsible {
-    display: inline-flex;
-    padding: 10px 10px;
-    transition: transform 0.3s ease-in-out;
-    transform: translateX(5px);
-    font-size: 5px;
-    border-radius: 0px;
-    border: 0px solid #00000000; /* Add a border for clarity */
-    background-color: #3399FF; /* Metro UI blue */
-    color: #FFFFFF;
-    width: 30px; /* Adjust width as needed */
-    height: 30px; /* Adjust height as needed */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    cursor: pointer; /* Indicate clickability */
-}
+      .collapsible.active {
+        background-color: #007acc;
+      }
 
-.collapsible.active {
-    background-color: #007ACC;
-}
+      .collapsible.active + .collapsible-content {
+        display: flexbox;
+      }
+      /* Styles for the content area of each collapsible */
+      .content {
+        max-width: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-width 0.2s ease, max-height 0.1s ease;
+        background-color: white;
+        padding: 0 6px;
+        font-size: 5px;
+      }
 
+      /* Expand content when the collapsible is active */
+      .collapsible.active + .content {
+        max-width: 300px;
+        max-height: 500px;
+        font-size: 5px;
+      }
 
-.collapsible.active + .collapsible-content {
-    display: flexbox;
-}
-/* Styles for the content area of each collapsible */
-.content {
-    max-width: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-width 0.7s ease-out, max-height 0.2s ease-out;
-    background-color: white;
-    padding: 0 6px;
-    font-size: 5px;
-}
+      /* Animate the margin effect when the category is opened */
+      .collapsible.active {
+        transform: translateX(0px);
+        font-size: 5px;
+      }
 
-/* Expand content when the collapsible is active */
-.collapsible.active + .content {
-    max-width: 300px;
-    max-height: 500px;
-    font-size: 5px;
-}
+      /*------------------------------------------------------------------------------*/
+      /* Playlist styles */
+      .playlist ul {
+        max-height: 50px; /* Set to display 5 tracks (assuming ~30px height per track) */
+        overflow-y: auto; /* Enable vertical scrolling */
+        padding-right: 10px; /* Optional: for spacing between scrollbar and content */
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        scroll-behavior: smooth; /* Enable smooth scrolling */
+        margin: 1px;
+      }
 
-/* Animate the margin effect when the category is opened */
-.collapsible.active {
-    transform: translateX(0px);
-    font-size: 5px;
-}
+      /* WebKit custom scrollbar styles */
+      .playlist ul::-webkit-scrollbar {
+        width: 10px; /* Width of the scrollbar */
+      }
 
-/*------------------------------------------------------------------------------*/
-/* Playlist styles */
-.playlist ul {
-    max-height: 50px; /* Set to display 5 tracks (assuming ~30px height per track) */
-    overflow-y: auto;  /* Enable vertical scrolling */
-    padding-right: 10px; /* Optional: for spacing between scrollbar and content */
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    scroll-behavior: smooth; /* Enable smooth scrolling */
-}
+      .playlist ul::-webkit-scrollbar-track {
+        background: #ffffff; /* Background color of the scrollbar track */
+        border-radius: 5px; /* Rounded edges for the track */
+        outline: 1px solid rgb(204, 204, 204); /* 3-pixel red outline */
+      }
 
-/* WebKit custom scrollbar styles */
-.playlist ul::-webkit-scrollbar {
-    width: 10px; /* Width of the scrollbar */
-}
+      .playlist ul::-webkit-scrollbar-thumb {
+        background-color: #000000; /* Color of the scrollbar thumb */
+        border-radius: 5px; /* Rounded edges for the thumb */
+        border: 2px solid #f1f1f1; /* Optional: border to add some spacing */
+      }
 
-.playlist ul::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Background color of the scrollbar track */
-    border-radius: 5px; /* Rounded edges for the track */
-}
+      .playlist ul::-webkit-scrollbar-thumb:hover {
+        background-color: #555; /* Color of the scrollbar thumb on hover */
+      }
 
-.playlist ul::-webkit-scrollbar-thumb {
-    background-color: #888; /* Color of the scrollbar thumb */
-    border-radius: 5px; /* Rounded edges for the thumb */
-    border: 2px solid #f1f1f1; /* Optional: border to add some spacing */
-}
+      /* Individual list item styles */
+      .playlist li {
+        padding: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-out;
+        font-size: 5px;
+      }
 
-.playlist ul::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* Color of the scrollbar thumb on hover */
-}
+      /* Highlight selected song */
+      .playlist li.selected {
+        font-weight: bold;
+        background-color: #f0f0f0;
+        font-family: Segoe UI, sans-serif;
+        font-size: 5px;
+        /* Inherit background from parent */
+      }
 
-/* Individual list item styles */
-.playlist li {
-    padding: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-out;
-    font-size: 5px;
-}
+      /* Hover effect for list items */
+      .playlist li:hover {
+        background-color: #e0e0e0;
+      }
 
-/* Highlight selected song */
-.playlist li.selected {
-    font-weight: bold;
-    background-color: #f0f0f0;
-    font-family: Segoe UI, sans-serif;
-    font-size: 5px;
-    /* Inherit background from parent */
-}
+      /*song title font size?*/
+      .song-title {
+        font-size: 10px; /*adjust font size as needed*/
+      }
 
-/* Hover effect for list items */
-.playlist li:hover {
-    background-color: #e0e0e0;
-}
+      /*------------------------------------------------------------------------------*/
+      /*progress bar*/
+      .progress {
+        width: 150px;
+        height: 5px;
+        background-color: #cecece; /* Track color */
+        cursor: pointer;
+        -webkit-appearance: none; /* Remove default appearance */
+        appearance: none;
+      }
 
-/*song title font size?*/
-.song-title {
-    font-size: 10px; /*adjust font size as needed*/
-}
+      .progress::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #0e0e0e;
+      }
 
-/*------------------------------------------------------------------------------*/
-/*progress bar*/
-.progress {
-    width: 150px;
-    height: 5px;
-    background-color: #cecece; /* Track color */
-    cursor: pointer;
-    -webkit-appearance: none; /* Remove default appearance */
-    appearance: none;
-}
+      .progress::-moz-range-thumb {
+        -moz-appearance: none;
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #fff;
+        cursor: pointer;
+      }
 
-.progress::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color:#0e0e0e;
-}
-
-.progress::-moz-range-thumb {
-    -moz-appearance: none;
-    appearance: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #fff;
-    cursor: pointer;
-}
-
-.progress::-ms-thumb {
-    -ms-appearance: none;
-    appearance: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #fff;
-    cursor: pointer;
-}
+      .progress::-ms-thumb {
+        -ms-appearance: none;
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #fff;
+        cursor: pointer;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="audio-player">
-        <h2 class="song-title"></h2>
-        <div class="top-bar">
-            <button class="prev"></button>
-            <button class="play"></button>
-            <button class="pause"> </button>
-            <button class="next"></button>
-            <input type="range" class="progress" min="0" max="100" value="0">
-            <span class="time">0:00 / 0:00</span>
-        </div>
-        
-        <div class="collapsible-container">
-            <button type="button" class="collapsible" style="background-color: #d7e022">Category 1</button>
-            <div class="content playlist" id="category1">
-                <ul></ul>
-            </div>
-            
-            <button type="button" class="collapsible" style="background-color: #ff94bf">Category 2</button>
-            <div class="content playlist" id="category2">
-                <ul></ul>
-            </div>
+      <h2 class="song-title"></h2>
+      <div class="top-bar">
+        <button class="prev"></button>
+        <button class="play"></button>
+        <button class="pause"></button>
+        <button class="next"></button>
+        <input type="range" class="progress" min="0" max="100" value="0" />
+        <span class="time">0:00 / 0:00</span>
+      </div>
 
-            <button type="button" class="collapsible" style="background-color: #ffe657">Category 3</button>
-            <div class="content playlist" id="category3">
-                <ul></ul>
-            </div>
-
-            <button type="button" class="collapsible" style="background-color: #2eafe9">Category 4</button>
-            <div class="content playlist" id="category4">
-                <ul></ul>
-            </div>
+      <div class="collapsible-container">
+        <button
+          type="button"
+          class="collapsible"
+          style="background-color: #d7e022"
+        >
+          Category 1
+        </button>
+        <div class="content playlist" id="category1">
+          <ul></ul>
         </div>
-    </div>          
-        
+
+        <button
+          type="button"
+          class="collapsible"
+          style="background-color: #ff94bf"
+        >
+          Category 2
+        </button>
+        <div class="content playlist" id="category2">
+          <ul></ul>
+        </div>
+
+        <button
+          type="button"
+          class="collapsible"
+          style="background-color: #ffe657"
+        >
+          Category 3
+        </button>
+        <div class="content playlist" id="category3">
+          <ul></ul>
+        </div>
+
+        <button
+          type="button"
+          class="collapsible"
+          style="background-color: #2eafe9"
+        >
+          Category 4
+        </button>
+        <div class="content playlist" id="category4">
+          <ul></ul>
+        </div>
+      </div>
+    </div>
+
     <script>
-        const audio = new Audio();
-        const songTitle = document.querySelector('.song-title');
-        const playBtn = document.querySelector('.play');
-        const pauseBtn = document.querySelector('.pause');
-        const prevBtn = document.querySelector('.prev');
-        const nextBtn = document.querySelector('.next');
-        const progress = document.querySelector('.progress');
-        const time = document.querySelector('.time');
+      const audio = new Audio();
+      const songTitle = document.querySelector(".song-title");
+      const playBtn = document.querySelector(".play");
+      const pauseBtn = document.querySelector(".pause");
+      const prevBtn = document.querySelector(".prev");
+      const nextBtn = document.querySelector(".next");
+      const progress = document.querySelector(".progress");
+      const time = document.querySelector(".time");
 
-        const songLinks = [];
+      const songLinks = [];
 
-        function fetchAudioFiles(category, folderPath) {
-            const apiUrl = `https://api.github.com/repos/eingarden/EGSR-Audio/contents/${folderPath}`;
-            const token = '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';
-            
-            fetch(apiUrl, {
-                headers: {
-                    'Authorization': `token ${token}`
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(file => {
-                        if (file.type === 'file' && (file.name.endsWith('.mp3') || file.name.endsWith('.ogg'))) {
-                            const rawUrl = file.download_url;
-                            songLinks.push({ link: rawUrl, category: category });
-                        }
-                    });
-                    updatePlaylistUI(); // Update the UI after fetching the files
-                })
-                .catch(error => console.error('Error fetching files:', error));
+      function fetchAudioFiles(category, folderPath) {
+        const apiUrl = `https://api.github.com/repos/eingarden/EGSR-Audio/contents/${folderPath}`;
+
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            data.forEach((file) => {
+              if (
+                file.type === "file" &&
+                (file.name.endsWith(".mp3") || file.name.endsWith(".ogg"))
+              ) {
+                const rawUrl = file.download_url;
+                songLinks.push({ link: rawUrl, category: category });
+              }
+            });
+            updatePlaylistUI(); // Update the UI after fetching the files
+          })
+          .catch((error) => console.error("Error fetching files:", error));
+      }
+
+      function updatePlaylistUI() {
+        // Clear existing content and remove selected class from all items
+        document.querySelectorAll(".playlist ul").forEach((ul) => {
+          ul.innerHTML = ""; // Clear existing content
+        });
+
+        // Add new songs to the playlist and mark the currently selected song
+        songLinks.forEach((song, i) => {
+          const title = song.link
+            .split("/")
+            .pop()
+            .replace(".ogg", "")
+            .replace(/%/g, " ");
+          const liElement = `<li class="${
+            i === currentSongIndex ? "selected" : ""
+          }">${title}</li>`;
+          document.querySelector(`#category${song.category} ul`).innerHTML +=
+            liElement;
+        });
+
+        // Add event listeners to list items
+        document.querySelectorAll(".playlist li").forEach((li, i) => {
+          li.addEventListener("click", () => {
+            loadSong(i);
+            audio.play();
+          });
+        });
+      }
+
+      function loadSong(index) {
+        currentSongIndex = index;
+        audio.src = songLinks[index].link;
+        songTitle.textContent = `Now playing: ${audio.src
+          .split("/")
+          .pop()
+          .replace(".ogg", "")
+          .replace(/%/g, " ")}`;
+        updatePlaylistUI();
+        if (shouldAutoPlay) audio.play();
+      }
+
+      // Initial song title display
+      songTitle.textContent = "Now playing: None";
+      songTitle.style.display = "block";
+
+      audio.addEventListener("timeupdate", () => {
+        progress.value = (audio.currentTime / audio.duration) * 100;
+        time.textContent = `${Math.floor(audio.currentTime / 60)}:${String(
+          Math.floor(audio.currentTime % 60)
+        ).padStart(2, "0")} / ${Math.floor(audio.duration / 60)}:${String(
+          Math.floor(audio.duration % 60)
+        ).padStart(2, "0")}`;
+      });
+
+      playBtn.addEventListener("click", () => {
+        audio.play();
+      });
+
+      pauseBtn.addEventListener("click", () => {
+        // Toggle pause class on pauseBtn click
+        pauseBtn.classList.toggle("paused");
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
         }
+      });
 
-        function updatePlaylistUI() {
-            // Clear existing content and remove selected class from all items
-            document.querySelectorAll('.playlist ul').forEach(ul => {
-                ul.innerHTML = ''; // Clear existing content
-            });
 
-            // Add new songs to the playlist and mark the currently selected song
-            songLinks.forEach((song, i) => {
-                const title = song.link.split('/').pop().replace('.ogg', '').replace(/%/g, ' ');
-                const liElement = `<li class="${i === currentSongIndex ? 'selected' : ''}">${title}</li>`;
-                document.querySelector(`#category${song.category} ul`).innerHTML += liElement;
-            });
+      prevBtn.addEventListener("click", () => {
+        shouldAutoPlay = true;
+        loadSong((currentSongIndex - 1 + songLinks.length) % songLinks.length);
+      });
 
-            // Add event listeners to list items
-            document.querySelectorAll('.playlist li').forEach((li, i) => {
-                li.addEventListener('click', () => {
-                    loadSong(i);
-                    audio.play();
-                });
-            });
-        }
+      nextBtn.addEventListener("click", () => {
+        shouldAutoPlay = true;
+        loadSong((currentSongIndex + 1) % songLinks.length);
+      });
 
-        function loadSong(index) {
-            currentSongIndex = index;
-            audio.src = songLinks[index].link;
-            songTitle.textContent = `Now playing: ${audio.src.split('/').pop().replace('.ogg', '').replace(/%/g, ' ')}`;
-            updatePlaylistUI();
-            if (shouldAutoPlay) audio.play();
-        }
-        //initial song title display
-        songTitle.textContent = "Now playing: None"
-        songTitle.style.display = 'block';
+      progress.addEventListener("input", () => {
+        audio.currentTime = (progress.value / 100) * audio.duration;
+      });
 
-        audio.addEventListener('timeupdate', () => {
-            progress.value = (audio.currentTime / audio.duration) * 100;
-            time.textContent = `${Math.floor(audio.currentTime / 60)}:${String(Math.floor(audio.currentTime % 60)).padStart(2, '0')} / ${Math.floor(audio.duration / 60)}:${String(Math.floor(audio.duration % 60)).padStart(2, '0')}`;
+      document.querySelectorAll(".collapsible").forEach((button) => {
+        button.addEventListener("click", function () {
+          this.classList.toggle("active");
+          const content = this.nextElementSibling;
+          content.style.maxHeight = content.style.maxHeight
+            ? null
+            : `${content.scrollHeight}px`;
         });
+      });
 
-        playBtn.addEventListener('click', () => audio.play());
-        pauseBtn.addEventListener('click', () => audio.pause());
+      // Fetch files for each category
+      fetchAudioFiles(1, "C1");
+      fetchAudioFiles(2, "C2");
+      fetchAudioFiles(3, "C3");
+      fetchAudioFiles(4, "C4");
 
-        prevBtn.addEventListener('click', () => {
-            shouldAutoPlay = true;
-            loadSong((currentSongIndex - 1 + songLinks.length) % songLinks.length);
+      let currentSongIndex = 0;
+      let shouldAutoPlay = false;
+      const playlist = document.querySelector(".playlist ul");
+
+      playlist.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        playlist.scrollBy({
+          top: event.deltaY / 3, // Adjust divisor to control scroll speed
+          behavior: "smooth",
         });
-
-        nextBtn.addEventListener('click', () => {
-            shouldAutoPlay = true;
-            loadSong((currentSongIndex + 1) % songLinks.length);
-        });
-
-        progress.addEventListener('input', () => {
-            audio.currentTime = (progress.value / 100) * audio.duration;
-        });
-
-        document.querySelectorAll('.collapsible').forEach(button => {
-            button.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-                content.style.maxHeight = content.style.maxHeight ? null : `${content.scrollHeight}px`;
-            });
-        });
-
-        // Fetch files for each category
-        fetchAudioFiles(1, 'C1');
-        fetchAudioFiles(2, 'C2');
-        fetchAudioFiles(3, 'C3');
-        fetchAudioFiles(4, 'C4');
-
-        let currentSongIndex = 0;
-        let shouldAutoPlay = false;
-        const playlist = document.querySelector('.playlist ul');
-
-		playlist.addEventListener('wheel', (event) => {
-    		event.preventDefault();
-    		playlist.scrollBy({
-        		top: event.deltaY / 3, // Adjust divisor to control scroll speed
-        		behavior: 'smooth'
-    });
-});
-        
-        
+      });
     </script>
-</body>
+  </body>
 </html>
