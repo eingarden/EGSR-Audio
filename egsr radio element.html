@@ -11,7 +11,7 @@
       
       .audio-player {
         background-color: #00000000;
-        color: #0088ff;
+        color: #ff2d2d;
         padding: 0px;
         font-family: Segoe UI, sans-serif;
         font-size: 5px;
@@ -20,46 +20,54 @@
         
       }
 
+      .song-title {
+        padding-bottom: 5px;
+        margin-bottom: .02%;
+        color: #ff2d2d;
+        font-size: 12px; /*adjust font size as needed*/
+        font-weight: lighter;
+      }
+
       /*------------------------------------------------------------------------------*/
       .pause {
-        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/pause.svg");
+        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/pauseNL.svg");
         background-size: cover;
         background-repeat: no-repeat;
+        background-position-y: -.74px;
         width: 40px;
         height: 20px;
-        background-color: #0091ff9e;
-        border-color: #00000000;
+        background-color: #000000;
+        border-color: #ff2d2d;
+        border-style: solid;
+        border-width: 1px;
         border-radius: 5px;
         transform: scale(1);
         transition: transform .5s;
-        
+        transform: translateY(2px);
 }
 
       .pause.paused {
-        transform: scale(.8) TranslateY(-2px);
+        transform: scale(.95) TranslateY(-2px);
         transition: transform .1s;
         opacity: 0.5;
-        
       }
 
       .pause.paused:hover {
-        transform: scale(.75) TranslateY(-2px);
+        transform: scale(.95) TranslateY(-2px);
         transition: transform .1s;
         opacity: 0.5;
-        
       }
 
       .pause:hover {
         transform: rotate(0deg) TranslateY(-2px);
         transition: transform .1s;
-        
       }
 
       .play {
         background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/playNL.svg");
         background-size: cover;
         background-repeat: no-repeat;
-        background-position-y: -.8px;
+        background-position-y: -.74px;
         width: 40px;
         height: 20px;
         background-color: #000000;
@@ -78,14 +86,19 @@
       }
 
       .prev {
-        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/prev.svg");
+        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/prevNL.svg");
         background-size: cover;
         background-repeat: no-repeat;
+        background-position-y: -.74px;
         width: 40px;
         height: 20px;
-        background-color: #0091ff9e;
-        border-color: #00000000;
+        background-color: #000000;
+        border-color: #ff2d2d;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 5px;
         transition: transform .5s;
+        transform: translateY(2px);
       }
 
       .prev:hover {
@@ -94,14 +107,19 @@
       }
 
       .next {
-        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/next.svg");
+        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/nextNL.svg");
         background-size: cover;
         background-repeat: no-repeat;
+        background-position-y: -.74px;
         width: 40px;
         height: 20px;
-        background-color: #0091ff9e;
-        border-color: #00000000;
+        background-color: #000000;
+        border-color: #ff2d2d;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 5px;
         transition: transform .5s;
+        transform: translateY(2px);
       }
 
       .next:hover {
@@ -227,11 +245,6 @@
         background-color: #e0e0e0;
       }
 
-      /*song title font size?*/
-      .song-title {
-        font-size: 10px; /*adjust font size as needed*/
-      }
-
       /*------------------------------------------------------------------------------*/
       /*progress bar*/
       .progress {
@@ -241,6 +254,7 @@
         cursor: pointer;
         -webkit-appearance: none; /* Remove default appearance */
         appearance: none;
+        border-radius: 10px;
       }
 
       .progress::-webkit-slider-thumb {
@@ -292,7 +306,7 @@
           class="collapsible"
           style="background-color: #d7e022"
         >
-          Category 1
+          
         </button>
         <div class="content playlist" id="category1">
           <ul></ul>
@@ -303,7 +317,7 @@
           class="collapsible"
           style="background-color: #ff94bf"
         >
-          Category 2
+          
         </button>
         <div class="content playlist" id="category2">
           <ul></ul>
@@ -314,7 +328,7 @@
           class="collapsible"
           style="background-color: #ffe657"
         >
-          Category 3
+          
         </button>
         <div class="content playlist" id="category3">
           <ul></ul>
@@ -325,7 +339,7 @@
           class="collapsible"
           style="background-color: #2eafe9"
         >
-          Category 4
+          
         </button>
         <div class="content playlist" id="category4">
           <ul></ul>
@@ -347,8 +361,13 @@
 
       function fetchAudioFiles(category, folderPath) {
         const apiUrl = `https://api.github.com/repos/eingarden/EGSR-Audio/contents/${folderPath}`;
+        const token = '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'
 
-        fetch(apiUrl)
+        fetch(apiUrl, {
+          headers: {
+            'Authorization': `token ${token}`
+          }
+        })
           .then((response) => response.json())
           .then((data) => {
             data.forEach((file) => {
