@@ -11,33 +11,33 @@
       
       .audio-player {
         background-color: #00000000;
-        color: #ff2d2d;
+        color: #000000;
         padding: 0px;
         font-family: Segoe UI, sans-serif;
         font-size: 5px;
         height: 90px;
         width: 1600px;
-        
       }
 
       .song-title {
         padding-bottom: 5px;
         margin-bottom: .02%;
-        color: #ff2d2d;
+        color: #000000;
         font-size: 12px; /*adjust font size as needed*/
         font-weight: lighter;
       }
 
+
       /*------------------------------------------------------------------------------*/
       .pause {
-        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/pauseNL.svg");
+        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/pause.svg");
         background-size: cover;
         background-repeat: no-repeat;
         background-position-y: -.74px;
         width: 40px;
         height: 20px;
-        background-color: #000000;
-        border-color: #ff2d2d;
+        background-color: #ffffff;
+        border-color: #000000;
         border-style: solid;
         border-width: 1px;
         border-radius: 5px;
@@ -64,14 +64,14 @@
       }
 
       .play {
-        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/playNL.svg");
+        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/play.svg");
         background-size: cover;
         background-repeat: no-repeat;
         background-position-y: -.74px;
         width: 40px;
         height: 20px;
-        background-color: #000000;
-        border-color: #ff2d2d;
+        background-color: #ffffff;
+        border-color: #000000;
         border-style: solid;
         border-width: 1px;
         border-radius: 5px;
@@ -86,14 +86,14 @@
       }
 
       .prev {
-        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/prevNL.svg");
+        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/prev.svg");
         background-size: cover;
         background-repeat: no-repeat;
         background-position-y: -.74px;
         width: 40px;
         height: 20px;
-        background-color: #000000;
-        border-color: #ff2d2d;
+        background-color: #ffffff;
+        border-color: #000000;
         border-style: solid;
         border-width: 1px;
         border-radius: 5px;
@@ -107,14 +107,15 @@
       }
 
       .next {
-        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/nextNL.svg");
+        background-image: url("https://github.com/eingarden/EGSR-Audio/raw/main/icons/next.svg");
         background-size: cover;
         background-repeat: no-repeat;
         background-position-y: -.74px;
+        margin-left: 2px;
         width: 40px;
         height: 20px;
-        background-color: #000000;
-        border-color: #ff2d2d;
+        background-color: #ffffff;
+        border-color: #000000;
         border-style: solid;
         border-width: 1px;
         border-radius: 5px;
@@ -144,23 +145,18 @@
       /* Styles for each collapsible button */
       .collapsible {
         display: inline-flex;
-        padding: 10px 10px;
+        padding: 1px 35.4px;
         transition: transform 0.15s ease-out;
-        transform: translateY(-5px);
+        transform: translateY(-3px);
         font-size: 5px;
-        border-radius: 0px;
+        border-radius: 50px;
         border: 0px solid #00000000; /* Add a border for clarity */
         background-color: #3399ff; /* Metro UI blue */
-        color: #ffffff;
         width: 30px; /* Adjust width as needed */
-        height: 30px; /* Adjust height as needed */
+        height: 10px; /* Adjust height as needed */
         cursor: alias; /* Indicate clickability */
+        margin-top: 5px;
       }
-
-      .collapsible.active {
-        background-color: #007acc;
-      }
-
       .collapsible.active + .collapsible-content {
         display: flexbox;
       }
@@ -169,10 +165,10 @@
         max-width: 0;
         max-height: 0;
         overflow: hidden;
-        transition: max-width 0.2s ease, max-height 0.1s ease;
-        background-color: white;
+        background-color: #ffffff00;
         padding: 0 6px;
         font-size: 5px;
+        transition: max-width 0.25s, max-height 0.25s, outline 0.55s;
       }
 
       /* Expand content when the collapsible is active */
@@ -180,12 +176,20 @@
         max-width: 300px;
         max-height: 500px;
         font-size: 5px;
+        outline: 0.5px solid #cccccc00; /* thin grey outline*/
+        border-radius: 5px;
+        margin-left: 5px;
+        margin-right: 5px;
       }
 
       /* Animate the margin effect when the category is opened */
       .collapsible.active {
         transform: translateX(0px);
         font-size: 5px;
+      }
+
+      .collapsible.content {
+        transition: max-width 0.25s, max-height 0.25s;
       }
 
       /*------------------------------------------------------------------------------*/
@@ -207,7 +211,7 @@
       }
 
       .playlist ul::-webkit-scrollbar-track {
-        background: #ffffff; /* Background color of the scrollbar track */
+        background: #ffffff00; /* Background color of the scrollbar track */
         border-radius: 5px; /* Rounded edges for the track */
         border-width: 1px;
         outline: 1px solid #cccccc; /* 3-pixel red outline */
@@ -229,6 +233,7 @@
         cursor: pointer;
         transition: background-color 0.2s ease-out;
         font-size: 5px;
+        text-shadow:0.3px 0 0 #ffffff,0 0.3px 0 #ffffff,-0.3px 0 0 #ffffff,0 -0.3px 0 #ffffff;
       }
 
       /* Highlight selected song */
@@ -243,6 +248,7 @@
       /* Hover effect for list items */
       .playlist li:hover {
         background-color: #e0e0e0;
+        text-shadow:0px 0 0 #ffffff00,0 0px 0 #ffffff00,-0px 0 0 #ffffff00,0 -0px 0 #ffffff00
       }
 
       /*------------------------------------------------------------------------------*/
@@ -264,6 +270,7 @@
         height: 10px;
         border-radius: 50%;
         background-color: #0e0e0e;
+        border: 0.8px solid #ffffff; /* Optional: border to add some spacing */
       }
 
       .progress::-moz-range-thumb {
@@ -339,7 +346,7 @@
           class="collapsible"
           style="background-color: #2eafe9"
         >
-          
+
         </button>
         <div class="content playlist" id="category4">
           <ul></ul>
@@ -361,7 +368,7 @@
 
       function fetchAudioFiles(category, folderPath) {
         const apiUrl = `https://api.github.com/repos/eingarden/EGSR-Audio/contents/${folderPath}`;
-        const token = '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'
+        const token = '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'
 
         fetch(apiUrl, {
           headers: {
