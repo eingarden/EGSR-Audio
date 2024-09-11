@@ -207,14 +207,14 @@
 
       /* WebKit custom scrollbar styles */
       .playlist ul::-webkit-scrollbar {
-        width: 5px; /* Width of the scrollbar */
+        width: 10px; /* Width of the scrollbar */
       }
 
       .playlist ul::-webkit-scrollbar-track {
         background: #ffffff00; /* Background color of the scrollbar track */
         border-radius: 5px; /* Rounded edges for the track */
         border-width: 1px;
-        outline: 1px solid #cccccc; /* 3-pixel red outline */
+        outline: 2px solid #cccccc; /* 3-pixel red outline */
         margin-top: 2px;
         margin-bottom: 2px;
       }
@@ -222,8 +222,7 @@
       .playlist ul::-webkit-scrollbar-thumb {
         background-color: #000000; /* Color of the scrollbar thumb */
         border-radius: 5px; /* Rounded edges for the thumb */
-        border: 1.5px solid #f1f1f1; /* Optional: border to add some spacing */
-        transform: scale 0.5;
+        border: 3px solid #f1f1f1; /* Optional: border to add some spacing */
       }
 
       .playlist ul::-webkit-scrollbar-thumb:hover {
@@ -372,16 +371,11 @@
       const progress = document.querySelector(".progress");
       const time = document.querySelector(".time");
 
-      const songLinksByCategory = {
-        1: [],
-        2: [],
-        3: [],
-        4: []
-      };
+      const songLinks = [];
 
       function fetchAudioFiles(category, folderPath) {
         const apiUrl = `https://api.github.com/repos/eingarden/EGSR-Audio/contents/${folderPath}`;
-        const token = 'ghTOKEN'
+        const token = 'GHTOKEN'
 
         fetch(apiUrl, {
           headers: {
@@ -396,52 +390,53 @@
                 (file.name.endsWith(".mp3") || file.name.endsWith(".ogg"))
               ) {
                 const rawUrl = file.download_url;
-                songLinksByCategory[category].push({ link: rawUrl });
+                songLinks.push({ link: rawUrl, category: category });
               }
             });
-            updatePlaylistUI(category); // Update the UI after fetching the files
+            updatePlaylistUI(); // Update the UI after fetching the files
           })
           .catch((error) => console.error("Error fetching files:", error));
       }
 
-      function updatePlaylistUI(category) {
-        const ulElement = document.querySelector(`#category${category} ul`);
-        ulElement.innerHTML = ""; // Clear existing content for the specific category
+      function updatePlaylistUI() {
+        // Clear existing content and remove selected class from all items
+        document.querySelectorAll(".playlist ul").forEach((ul) => {
+          ul.innerHTML = ""; // Clear existing content
+        });
 
-        songLinksByCategory[category].forEach((song, i) => {
-          const title = song.link.split("/").pop().replace(".ogg", "").replace(/%/g, " ");
-          const liElement = `<li>${title}</li>`;
-          ulElement.innerHTML += liElement;
+        // Add new songs to the playlist and mark the currently selected song
+        songLinks.forEach((song, i) => {
+          const title = song.link
+            .split("/")
+            .pop()
+            .replace(".ogg", "")
+            .replace(/%/g, " ");
+          const liElement = `<li class="${
+            i === currentSongIndex ? "selected" : ""
+          }">${title}</li>`;
+          document.querySelector(`#category${song.category} ul`).innerHTML +=
+            liElement;
         });
 
         // Add event listeners to list items
-        ulElement.querySelectorAll("li").forEach((li, i) => {
+        document.querySelectorAll(".playlist li").forEach((li, i) => {
           li.addEventListener("click", () => {
-            loadSong(category, i);
+            loadSong(i);
             audio.play();
           });
         });
-
-        const selectedIndex = songLinksByCategory[category].findIndex(song => song.link === audio.src)
-        ulElement.querySelectorAll("li")[selectedIndex].classList.add('selected');
       }
 
-      function loadSong(category, index) {
-        const selectedSong = songLinksByCategory[category][index];
-        audio.src = selectedSong.link;
-        songTitle.textContent = `Now playing: ${audio.src.split("/").pop().replace(".ogg", "").replace(/%/g, " ")}`;
-        //remove selection
-        document.querySelectorAll(".playlist li").forEach(li => li.classList.remove('selected'));
-        //category selection fix
-        const ulElement = document.querySelector(`#category${category} ul`);
-        ulElement.querySelectorAll("li")[index].classList.add('selected');
-        //update current song index (prev fix)
-        currentCategory = category;
+      function loadSong(index) {
         currentSongIndex = index;
-        updatePlaylistUI(category); // Ensure UI is updated to reflect the selection
-
-        pauseBtn.classList.remove("paused"); // Remove the 'paused' class when a new song is loaded
-        audio.play(); // Start playing the new song
+        audio.src = songLinks[index].link;
+        songTitle.textContent = `Now playing: ${audio.src
+          .split("/")
+          .pop()
+          .replace(".ogg", "")
+          .replace(/%/g, " ")}`;
+        updatePlaylistUI();
+        if (shouldAutoPlay) audio.play();
       }
 
       // Initial song title display
@@ -473,19 +468,13 @@
 
 
       prevBtn.addEventListener("click", () => {
-        if (currentCategory !== null && songLinksByCategory[currentCategory].length > 0) {
-          //go to prev song
-          currentSongIndex = (currentSongIndex - 1 + songLinksByCategory[currentCategory].length) % songLinksByCategory[currentCategory].length;
-          loadSong(currentCategory, currentSongIndex);
-        }
+        shouldAutoPlay = true;
+        loadSong((currentSongIndex - 1 + songLinks.length) % songLinks.length);
       });
 
       nextBtn.addEventListener("click", () => {
-        if (currentCategory !== null && songLinksByCategory[currentCategory].length > 0) {
-          //go to next
-          currentSongIndex = (currentSongIndex + 1) % songLinksByCategory[currentCategory].length;
-          loadSong(currentCategory, currentSongIndex);
-        }
+        shouldAutoPlay = true;
+        loadSong((currentSongIndex + 1) % songLinks.length);
       });
 
       progress.addEventListener("input", () => {
@@ -515,8 +504,8 @@
       playlist.addEventListener("wheel", (event) => {
         event.preventDefault();
         playlist.scrollBy({
-          top: event.deltaY / 1, // Adjust divisor to control scroll speed
-          behavior: "auto",
+          top: event.deltaY / 3, // Adjust divisor to control scroll speed
+          behavior: "smooth",
         });
       });
     </script>
